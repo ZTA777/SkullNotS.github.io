@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkullNotS - Roblox Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00b4d8;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00b4d8;
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%2300b4d8;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%2300b4d8;stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="150" r="100" fill="url(%23grad1)" /><circle cx="800" cy="100" r="80" fill="url(%23grad1)" /></svg>') no-repeat center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #caf0f8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        }
+
+        .featured-game {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b4d8;
+            font-size: 1.2rem;
+            border: 2px solid rgba(0, 180, 216, 0.3);
+        }
+
+        .featured-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00b4d8;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00b4d8;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #caf0f8;
+        }
+
+        .games-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #00b4d8;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #00b4d8;
+            transform: translateY(-2px);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 180, 216, 0.2);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b4d8;
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(0, 180, 216, 0.3);
+        }
+
+        .game-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #00b4d8;
+        }
+
+        .game-genre {
+            background: rgba(0, 180, 216, 0.2);
+            color: #00b4d8;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+
+        .game-description {
+            flex: 1;
+            margin-bottom: 15px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #caf0f8;
+        }
+
+        .play-button {
+            width: 100%;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .play-button:hover {
+            background: linear-gradient(45deg, #0077b6, #005577);
+        }
+
+        .about-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .skills-section {
+            padding: 80px 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #00b4d8;
+        }
+
+        .videos-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 180, 216, 0.2);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b4d8;
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(0, 180, 216, 0.3);
+        }
+
+        .video-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .video-info h3 {
+            color: #00b4d8;
+            margin-bottom: 10px;
+        }
+
+        .video-info p {
+            color: #caf0f8;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .contact-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #caf0f8;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                justify-content: center;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">SkullNotS</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>SkullNotS</h1>
+                <p>Roblox Scripter & UI Developer - 5 Years of Experience</p>
+                <button class="cta-button" onclick="scrollToSection('contact')">Hire Me</button>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-image">👨‍💻</div>
+                    <div>
+                        <h2 class="section-title">About Me</h2>
+                        <p>Hey! I am SkullNotS and I am a Scripter on the Roblox platform. I mainly specialize in scripting and UI I've been coding in the lua language for about 5 years.</p>
+                        <br>
+                        <p>Contact: You can contact me through this or through DevForum.</p>
+                        <br>
+                        <p><strong>Head Developer & Community Manager @ Josa's Studios (21.1M+ Visits)</strong></p>
+                        <p><strong>Owner & Scripter @ World War Roleplay (325K+ Visits)</strong></p>
+                        <p><strong>Owner & Scripter @ Whispers in the Dark (122+ Visits) (WORK IN PROGRESS)</strong></p>
+                        <p><strong>Owner & Scripter @ Color Fall (172+ Visits) (Abandoned)</strong> Note: This was one of my earliest projects.</p>
+                        <p><strong>Owner & Scripter @ Obby Survive (2k+ Visits) (Abandoned)</strong> Note: This was also one of my very earliest projects back in 2021 when I was still learning how to code, so yeah, it is of course going to be really bad, but we all start somewhere.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-game">
+            <div class="container">
+                <div class="featured-content">
+                    <div class="featured-image">
+                        🌍 WW2 Roleplay
+                    </div>
+                    <div class="featured-info">
+                        <h2>World War 2 Roleplay</h2>
+                        <p>Head Developer & Community Manager at Josa's Studios. Features alliance systems, declare war mechanics, GDP leaderstats, gamepasses, devproducts, nukes, and building troop systems.</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-number">21.1M+</div>
+                                <div class="stat-label">Total Visits</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">Active</div>
+                                <div class="stat-label">Development</div>
+                            </div>
+                        </div>
+                        <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="cta-button">Play on Roblox</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="games" class="games-section">
+            <div class="container">
+                <h2 class="section-title">SkullNotS Portfolio</h2>
+                
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Games</button>
+                    <button class="filter-btn" data-filter="featured">Featured Games</button>
+                    <button class="filter-btn" data-filter="showcase">Showcase</button>
+                    <button class="filter-btn" data-filter="strategy">Strategy</button>
+                    <button class="filter-btn" data-filter="roleplay">Roleplay</button>
+                </div>
+
+                <div class="games-grid">
+                    <div class="game-card" data-category="featured">
+                        <div class="game-image">🟨 Color Fall</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Color Fall</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>Spectating System, Round System, Purchase pets with money system, and Hexagon system to fade out if a player steps on one.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 172+ Visits</span>
+                                <span>⭐ Abandoned</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/11220400988/Color-Fall" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="featured showcase strategy">
+                        <div class="game-image">♟️ Royal Chess</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Royal Chess</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>Placement System, Winning/Losing system, Bot System, Theme System, Captured Pieces Mechanics.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 Custom Game</span>
+                                <span>⭐ Bot System</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/72979049812215/Royal-Chess" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="featured showcase">
+                        <div class="game-image">⚙️ Particle Showcase</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Particle Showcase</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>Module Scripts to create particales that freeze or turn you on fire.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 OOP Demo</span>
+                                <span>⭐ Module Scripts</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/109296821545756/Partical-Showcase" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="featured showcase">
+                        <div class="game-image">🏗️ Plot Builder</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Plot Builder</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>Placement System, Money system, Theme mechanic, Reset Plot mechanics, and Delete Mode Mechanic.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 Demo Game</span>
+                                <span>⭐ Building System</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/96934881237791/Plot-Builder" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="featured showcase">
+                        <div class="game-image">⚡ VFX Combat Showcase</div>
+                        <div class="game-info">
+                            <h3 class="game-title">VFX Combat Power Showcase</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>VFX, System that creates both UI and VFX and power abilities.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 Tech Demo</span>
+                                <span>⭐ VFX Skills</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/72449025908917/VFX-Combat-Power-Showcase" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="featured strategy roleplay">
+                        <div class="game-image">🌍 World War 2 Roleplay</div>
+                        <div class="game-info">
+                            <h3 class="game-title">World War 2 Roleplay</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>Head Developer at Josa's Studios. Declare War mechanics, Gamepasses, DevProducts, Alliance Systems, and Spawning factories and other building to gain more GDP system.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 21.1M+ Visits</span>
+                                <span>⭐ Active Development</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="featured strategy roleplay">
+                        <div class="game-image">⚔️ NEW ERA Roleplay</div>
+                        <div class="game-info">
+                            <h3 class="game-title">NEW ERA World War Roleplay</h3>
+                            <span class="game-genre">Featured Games</span>
+                            <div class="game-description">
+                                <p>Owner & Scripter. Alliance system, declare war mechanics, GDP leaderstats, Gamepasses, Devproducts, Nukes, and a building troop system.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 325K+ Visits</span>
+                                <span>⭐ Owner & Scripter</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/18215756523/NEW-ERA-World-War-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="showcase strategy">
+                        <div class="game-image">♟️ Royal Chess</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Royal Chess</h3>
+                            <span class="game-genre">Showcase/Strategy</span>
+                            <div class="game-description">
+                                <p>Placement System, Winning/Losing system, Bot System, Theme System, Captured Pieces Mechanics.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 Custom Game</span>
+                                <span>⭐ Bot System</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/72979049812215/Royal-Chess" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="showcase">
+                        <div class="game-image">⚙️ Particle Showcase</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Particle Showcase</h3>
+                            <span class="game-genre">Showcase</span>
+                            <div class="game-description">
+                                <p>Module Scripts to create particales that freeze or turn you on fire.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 OOP Demo</span>
+                                <span>⭐ Module Scripts</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/109296821545756/Partical-Showcase" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="showcase">
+                        <div class="game-image">🏗️ Plot Builder</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Plot Builder</h3>
+                            <span class="game-genre">Showcase</span>
+                            <div class="game-description">
+                                <p>Placement System, Money system, Theme mechanic, Reset Plot mechanics, and Delete Mode Mechanic.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 Demo Game</span>
+                                <span>⭐ Building System</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/96934881237791/Plot-Builder" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="showcase">
+                        <div class="game-image">⚡ VFX Combat Showcase</div>
+                        <div class="game-info">
+                            <h3 class="game-title">VFX Combat Power Showcase</h3>
+                            <span class="game-genre">Showcase</span>
+                            <div class="game-description">
+                                <p>VFX, System that creates both UI and VFX and power abilities.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 Tech Demo</span>
+                                <span>⭐ VFX Skills</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/72449025908917/VFX-Combat-Power-Showcase" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="strategy roleplay">
+                        <div class="game-image">🌍 World War 2 Roleplay</div>
+                        <div class="game-info">
+                            <h3 class="game-title">World War 2 Roleplay</h3>
+                            <span class="game-genre">Strategy/Roleplay</span>
+                            <div class="game-description">
+                                <p>Head Developer at Josa's Studios. Declare War mechanics, Gamepasses, DevProducts, Alliance Systems, and Spawning factories and other building to gain more GDP system.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 21.1M+ Visits</span>
+                                <span>⭐ Active Development</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="strategy roleplay">
+                        <div class="game-image">⚔️ NEW ERA Roleplay</div>
+                        <div class="game-info">
+                            <h3 class="game-title">NEW ERA World War Roleplay</h3>
+                            <span class="game-genre">Strategy/Roleplay</span>
+                            <div class="game-description">
+                                <p>Owner & Scripter. Alliance system, declare war mechanics, GDP leaderstats, Gamepasses, Devproducts, Nukes, and a building troop system.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 325K+ Visits</span>
+                                <span>⭐ Owner & Scripter</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/18215756523/NEW-ERA-World-War-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="other">
+                        <div class="game-image">🌙 Whispers in the Dark</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Whispers in the Dark</h3>
+                            <span class="game-genre">Other</span>
+                            <div class="game-description">
+                                <p>Time system, Wood/Collect system, and NPC System.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 122+ Visits</span>
+                                <span>⭐ Work in Progress</span>
+                            </div>
+                            <a href="https://www.roblox.com/games/16292439198/Whispers-in-the-Dark-Pre-Alpha" target="_blank" class="play-button">Play on Roblox</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-category="other">
+                        <div class="game-image">🏃 Obby Survive</div>
+                        <div class="game-info">
+                            <h3 class="game-title">Obby Survive</h3>
+                            <span class="game-genre">Other</span>
+                            <div class="game-description">
+                                <p>One of my very earliest projects back in 2021 when I was still learning how to code.</p>
+                            </div>
+                            <div class="game-stats">
+                                <span>👥 2K+ Visits</span>
+                                <span>⭐ Abandoned</span>
+                            </div>
+                            <a href="#" class="play-button">Abandoned</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <h2 class="section-title">Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">⚡</div>
+                        <h3>Lua Scripting</h3>
+                        <p>Server & Client side development</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🏗️</div>
+                        <h3>Roblox Studio</h3>
+                        <p>Building and scripting</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🎨</div>
+                        <h3>UI/UX Design</h3>
+                        <p>Creating user interfaces</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">⚙️</div>
+                        <h3>Game Mechanics</h3>
+                        <p>Combat systems, inventory, etc.</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">📊</div>
+                        <h3>DataStore</h3>
+                        <p>Player data management</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🌐</div>
+                        <h3>Remote Events/Functions</h3>
+                        <p>Client-server communication</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="videos-section">
+            <div class="container">
+                <h2 class="section-title">Videos/Screenshots</h2>
+                <div class="videos-grid">
+                    <div class="video-card">
+                        <div class="video-thumbnail">📹 VFX/Combat Power Showcase</div>
+                        <div class="video-info">
+                            <h3>VFX/Combat Power Showcase</h3>
+                            <p>Demonstration of my VFX and scripting skills with power abilities and visual effects.</p>
+                            <a href="https://www.youtube.com/watch?v=SCQ8X1zSslk" target="_blank" class="cta-button">Watch Video</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">📹 Inventory System</div>
+                        <div class="video-info">
+                            <h3>Inventory System</h3>
+                            <p>Showcase of custom inventory system development and functionality.</p>
+                            <a href="https://www.youtube.com/watch?v=1TjaKGCWtDM" target="_blank" class="cta-button">Watch Video</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">📹 Plot Builder</div>
+                        <div class="video-info">
+                            <h3>Plot Builder</h3>
+                            <p>Demonstration of placement system, money system, and building mechanics.</p>
+                            <a href="https://www.youtube.com/watch?v=z-TsPh5hbxQ" target="_blank" class="cta-button">Watch Video</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">📹 Royal Chess</div>
+                        <div class="video-info">
+                            <h3>Royal Chess Game Showcase</h3>
+                            <p>Complete chess game with bot system, theme mechanics, and captured pieces system.</p>
+                            <a href="https://www.youtube.com/watch?v=Gx1CBQ43gsw" target="_blank" class="cta-button">Watch Video</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Let's Work Together!</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>🎮</span>
+                        <span><a href="https://www.roblox.com/users/1029215429/profile" target="_blank" style="color: #caf0f8; text-decoration: none;">@SkullNotS</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <span>💬</span>
+                        <span>Discord: luminadev</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🛠️</span>
+                        <span><a href="https://devforum.roblox.com/u/skullnots/summary" target="_blank" style="color: #caf0f8; text-decoration: none;">DevForum</a></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SkullNotS. All rights reserved. | Roblox Developer Portfolio</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const gameCards = document.querySelectorAll('.game-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                gameCards.forEach(card => {
+                    const categories = card.getAttribute('data-category').split(' ');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        gameCards.forEach(card => {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.3)';
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.game-card, .skill-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
