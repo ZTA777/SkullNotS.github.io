@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkullNotS - Roblox Developer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,40 +12,107 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --background: #0f0f23;
+            --surface: #1a1a2e;
+            --surface-light: #25253a;
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(99, 102, 241, 0.3);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
+        /* Animated Background */
+        .bg-animation {
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.1;
+        }
+
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 120px; height: 120px; top: 60%; left: 80%; animation-delay: 2s; }
+        .shape:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 20%; animation-delay: 4s; }
+        .shape:nth-child(4) { width: 100px; height: 100px; top: 30%; left: 70%; animation-delay: 1s; }
+        .shape:nth-child(5) { width: 140px; height: 140px; top: 10%; left: 50%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 15, 35, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(15, 15, 35, 0.95);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #00b4d8;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
@@ -54,92 +122,334 @@
         }
 
         .nav-links a {
-            color: #ffffff;
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
         }
 
         .nav-links a:hover {
-            color: #00b4d8;
+            color: var(--text-primary);
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
         .hero {
-            padding: 120px 0 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%2300b4d8;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%2300b4d8;stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="150" r="100" fill="url(%23grad1)" /><circle cx="800" cy="100" r="80" fill="url(%23grad1)" /></svg>') no-repeat center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary-light);
+            margin-bottom: 2rem;
+            animation: slideInDown 1s ease-out;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary-light);
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #caf0f8;
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #00b4d8, #0077b6);
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: none;
-            cursor: pointer;
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        .about-image {
+            position: relative;
         }
 
-        .featured-game {
-            padding: 80px 0;
+        .about-avatar {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .about-avatar::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            opacity: 0.2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.05); opacity: 0.1; }
+        }
+
+        .about-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+        }
+
+        .about-info p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .experience-list {
+            list-style: none;
+            space-y: 1rem;
+        }
+
+        .experience-item {
             background: rgba(255, 255, 255, 0.05);
-            margin-top: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .experience-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            color: var(--primary-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Featured Project */
+        .featured-project {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .featured-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 3rem;
             align-items: center;
         }
 
         .featured-image {
-            width: 100%;
+            background: linear-gradient(135deg, var(--surface), var(--surface-light));
+            border-radius: 16px;
             height: 300px;
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
-            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #00b4d8;
-            font-size: 1.2rem;
-            border: 2px solid rgba(0, 180, 216, 0.3);
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
         }
 
-        .featured-info h2 {
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .featured-image:hover::after {
+            left: 100%;
+        }
+
+        .featured-info h3 {
             font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 1rem;
-            color: #00b4d8;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .stats {
+        .featured-stats {
             display: flex;
-            gap: 30px;
-            margin: 20px 0;
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
         .stat {
@@ -148,325 +458,434 @@
 
         .stat-number {
             font-size: 2rem;
-            font-weight: bold;
-            color: #00b4d8;
+            font-weight: 800;
+            color: var(--primary-light);
+            display: block;
         }
 
         .stat-label {
-            font-size: 0.9rem;
-            color: #caf0f8;
+            font-size: 0.875rem;
+            color: var(--text-muted);
         }
 
-        .games-section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #00b4d8;
-        }
-
-        .filter-buttons {
+        /* Projects Grid */
+        .projects-filter {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            gap: 1rem;
+            margin-bottom: 3rem;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(0, 180, 216, 0.3);
-            padding: 10px 20px;
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            background: #00b4d8;
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
 
-        .games-grid {
+        .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
         }
 
-        .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 180, 216, 0.2);
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
         }
 
-        .game-image {
-            width: 100%;
+        .project-image {
             height: 200px;
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, var(--surface), var(--surface-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #00b4d8;
-            font-size: 1.1rem;
-            border-bottom: 2px solid rgba(0, 180, 216, 0.3);
+            font-size: 1.2rem;
+            color: var(--primary-light);
+            position: relative;
+            overflow: hidden;
         }
 
-        .game-info {
-            padding: 20px;
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover .project-image::after {
+            left: 100%;
+        }
+
+        .project-content {
+            padding: 2rem;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            flex: 1;
         }
 
-        .game-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #00b4d8;
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
-        .game-genre {
-            background: rgba(0, 180, 216, 0.2);
-            color: #00b4d8;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+        .project-badge {
             display: inline-block;
-            margin-bottom: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--primary-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
             width: fit-content;
         }
 
-        .game-description {
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
             flex: 1;
-            margin-bottom: 15px;
         }
 
-        .game-stats {
+        .project-stats {
             display: flex;
             justify-content: space-between;
-            margin: 15px 0;
-            font-size: 0.9rem;
-            color: #caf0f8;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
         }
 
-        .play-button {
-            width: 100%;
-            background: linear-gradient(45deg, #00b4d8, #0077b6);
+        .project-link {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s ease;
             text-decoration: none;
-            display: block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             text-align: center;
             margin-top: auto;
         }
 
-        .play-button:hover {
-            background: linear-gradient(45deg, #0077b6, #005577);
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
         }
 
-        .about-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            margin: 40px 0;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .about-image {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(45deg, #00b4d8, #0077b6);
-            border-radius: 50%;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-        }
-
-        .skills-section {
-            padding: 80px 0;
-        }
-
+        /* Skills Section */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .skill-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
             text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .skill-icon {
             font-size: 3rem;
-            margin-bottom: 15px;
-            color: #00b4d8;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .videos-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            margin: 40px 0;
+        .skill-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
+        .skill-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Videos Section */
         .videos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
 
         .video-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
         }
 
         .video-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 180, 216, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         .video-thumbnail {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            height: 200px;
+            background: linear-gradient(135deg, var(--surface), var(--surface-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #00b4d8;
-            font-size: 1.1rem;
-            border-bottom: 2px solid rgba(0, 180, 216, 0.3);
+            font-size: 1.2rem;
+            color: var(--primary-light);
+            position: relative;
+            overflow: hidden;
         }
 
         .video-info {
-            padding: 20px;
+            padding: 2rem;
             text-align: center;
         }
 
-        .video-info h3 {
-            color: #00b4d8;
-            margin-bottom: 10px;
+        .video-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
-        .video-info p {
-            color: #caf0f8;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
+        .video-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
+        /* Contact Section */
         .contact-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(6, 182, 212, 0.05));
+            border-radius: 24px;
+            padding: 4rem 2rem;
             text-align: center;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
         }
 
-        .contact-info {
+        .contact-links {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
+            gap: 2rem;
+            margin-top: 3rem;
             flex-wrap: wrap;
         }
 
-        .contact-item {
+        .contact-link {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: #caf0f8;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
         }
 
+        .contact-link:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .contact-icon {
+            font-size: 1.25rem;
+        }
+
+        /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.3);
-            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 4rem;
         }
 
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .featured-content {
-                grid-template-columns: 1fr;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                text-align: center;
+            .container {
+                padding: 0 1rem;
             }
 
             .nav-links {
                 display: none;
             }
 
-            .games-grid {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 3rem;
             }
 
-            .stats {
-                justify-content: center;
-            }
-
-            .contact-info {
+            .hero-cta {
                 flex-direction: column;
                 align-items: center;
             }
+
+            .about-content,
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .projects-grid,
+            .skills-grid,
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .featured-stats {
+                justify-content: center;
+            }
         }
 
-        .hidden {
-            display: none;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
         }
     </style>
 </head>
 <body>
-    <header>
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <header id="header">
         <nav class="container">
             <div class="logo">SkullNotS</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#games">Games</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#videos">Videos</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -475,18 +894,33 @@
     <main>
         <section id="home" class="hero">
             <div class="container">
-                <h1>SkullNotS</h1>
-                <p>Roblox Scripter & UI Developer - 5 Years of Experience</p>
-                <button class="cta-button" onclick="scrollToSection('contact')">Hire Me</button>
+                <div class="hero-content">
+                    <div class="hero-badge" style="display: none;">
+                        <span>🚀</span>
+                        Available for Projects
+                    </div>
+                    <h1>SkullNotS</h1>
+                    <p class="hero-subtitle">Roblox Scripter & UI Developer - 5 Years of Experience</p>
+                    <div class="hero-cta">
+                        <a href="#contact" class="btn btn-primary">Let's Work Together</a>
+                        <a href="#projects" class="btn btn-secondary">View My Work</a>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="about" class="about-section">
+        <section id="about" class="section fade-in">
             <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">About Me</h2>
+                </div>
+                
                 <div class="about-content">
-                    <div class="about-image">👨‍💻</div>
-                    <div>
-                        <h2 class="section-title">About Me</h2>
+                    <div class="about-image">
+                        <div class="about-avatar">👨‍💻</div>
+                    </div>
+                    <div class="about-info">
+                        <h3>Professional Roblox Developer</h3>
                         <p>Hey! I am SkullNotS and I am a Scripter on the Roblox platform. I mainly specialize in scripting and UI I've been coding in the lua language for about 5 years.</p>
                         <br>
                         <p>Contact: You can contact me through this or through DevForum.</p>
@@ -496,385 +930,291 @@
                         <p><strong>Owner & Scripter @ Whispers in the Dark (122+ Visits) (WORK IN PROGRESS)</strong></p>
                         <p><strong>Owner & Scripter @ Color Fall (172+ Visits) (Abandoned)</strong> Note: This was one of my earliest projects.</p>
                         <p><strong>Owner & Scripter @ Obby Survive (2k+ Visits) (Abandoned)</strong> Note: This was also one of my very earliest projects back in 2021 when I was still learning how to code, so yeah, it is of course going to be really bad, but we all start somewhere.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="featured-game">
-            <div class="container">
-                <div class="featured-content">
-                    <div class="featured-image">
-                        🌍 WW2 Roleplay
-                    </div>
-                    <div class="featured-info">
-                        <h2>World War 2 Roleplay</h2>
-                        <p>Head Developer & Community Manager at Josa's Studios. Features alliance systems, declare war mechanics, GDP leaderstats, gamepasses, devproducts, nukes, and building troop systems.</p>
-                        <div class="stats">
-                            <div class="stat">
-                                <div class="stat-number">21.1M+</div>
-                                <div class="stat-label">Total Visits</div>
+                        
+                        <div class="experience-list" style="display: none;">
+                            <div class="experience-item">
+                                <div class="experience-title">Head Developer & Community Manager</div>
+                                <div class="experience-company">Josa's Studios</div>
+                                <div class="experience-description">21.1M+ Visits</div>
                             </div>
-                            <div class="stat">
-                                <div class="stat-number">Active</div>
-                                <div class="stat-label">Development</div>
+                            <div class="experience-item">
+                                <div class="experience-title">Owner & Scripter</div>
+                                <div class="experience-company">World War Roleplay</div>
+                                <div class="experience-description">325K+ Visits</div>
+                            </div>
+                            <div class="experience-item">
+                                <div class="experience-title">Owner & Scripter</div>
+                                <div class="experience-company">Whispers in the Dark</div>
+                                <div class="experience-description">122+ Visits (WORK IN PROGRESS)</div>
+                            </div>
+                            <div class="experience-item">
+                                <div class="experience-title">Owner & Scripter</div>
+                                <div class="experience-company">Color Fall</div>
+                                <div class="experience-description">172+ Visits (Abandoned) - One of my earliest projects</div>
+                            </div>
+                            <div class="experience-item">
+                                <div class="experience-title">Owner & Scripter</div>
+                                <div class="experience-company">Obby Survive</div>
+                                <div class="experience-description">2k+ Visits (Abandoned) - My very earliest project back in 2021 when I was still learning how to code</div>
                             </div>
                         </div>
-                        <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="cta-button">Play on Roblox</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="games" class="games-section">
+        <section class="section fade-in">
             <div class="container">
-                <h2 class="section-title">SkullNotS Portfolio</h2>
-                
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All Games</button>
-                    <button class="filter-btn" data-filter="featured">Featured Games</button>
+                <div class="featured-project">
+                    <div class="featured-content">
+                        <div class="featured-image">
+                            🌍 World War 2 Roleplay
+                        </div>
+                        <div class="featured-info">
+                            <h3>World War 2 Roleplay</h3>
+                            <p>Head Developer & Community Manager at Josa's Studios. Features alliance systems, declare war mechanics, GDP leaderstats, gamepasses, devproducts, nukes, and building troop systems.</p>
+                            <div class="featured-stats">
+                                <div class="stat">
+                                    <span class="stat-number">21.1M+</span>
+                                    <span class="stat-label">Total Visits</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">Active</span>
+                                    <span class="stat-label">Development</span>
+                                </div>
+                            </div>
+                            <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="btn btn-primary">Play on Roblox</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section fade-in">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">SkullNotS Portfolio</h2>
+                    <p class="section-description">Showcasing my best work in Roblox development</p>
+                </div>
+
+                <div class="projects-filter">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="featured">Featured</button>
                     <button class="filter-btn" data-filter="showcase">Showcase</button>
                     <button class="filter-btn" data-filter="strategy">Strategy</button>
                     <button class="filter-btn" data-filter="roleplay">Roleplay</button>
                 </div>
 
-                <div class="games-grid">
-                    <div class="game-card" data-category="featured">
-                        <div class="game-image">🟨 Color Fall</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Color Fall</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>Spectating System, Round System, Purchase pets with money system, and Hexagon system to fade out if a player steps on one.</p>
-                            </div>
-                            <div class="game-stats">
+                <div class="projects-grid">
+                    <div class="project-card" data-category="featured">
+                        <div class="project-image">🟨 Color Fall</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Color Fall</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">Spectating System, Round System, Purchase pets with money system, and Hexagon system to fade out if a player steps on one.</p>
+                            <div class="project-stats">
                                 <span>👥 172+ Visits</span>
                                 <span>⭐ Abandoned</span>
                             </div>
-                            <a href="https://www.roblox.com/games/11220400988/Color-Fall" target="_blank" class="play-button">Play on Roblox</a>
+                            <a href="https://www.roblox.com/games/11220400988/Color-Fall" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
 
-                    <div class="game-card" data-category="featured showcase strategy">
-                        <div class="game-image">♟️ Royal Chess</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Royal Chess</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>Placement System, Winning/Losing system, Bot System, Theme System, Captured Pieces Mechanics.</p>
-                            </div>
-                            <div class="game-stats">
+                    <div class="project-card" data-category="featured showcase strategy">
+                        <div class="project-image">♟️ Royal Chess</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Royal Chess</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">Placement System, Winning/Losing system, Bot System, Theme System, Captured Pieces Mechanics.</p>
+                            <div class="project-stats">
                                 <span>👥 Custom Game</span>
                                 <span>⭐ Bot System</span>
                             </div>
-                            <a href="https://www.roblox.com/games/72979049812215/Royal-Chess" target="_blank" class="play-button">Play on Roblox</a>
+                            <a href="https://www.roblox.com/games/72979049812215/Royal-Chess" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
 
-                    <div class="game-card" data-category="featured showcase">
-                        <div class="game-image">⚙️ Particle Showcase</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Particle Showcase</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>Module Scripts to create particales that freeze or turn you on fire.</p>
-                            </div>
-                            <div class="game-stats">
+                    <div class="project-card" data-category="featured showcase">
+                        <div class="project-image">⚙️ Particle Showcase</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Particle Showcase</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">Module Scripts to create particales that freeze or turn you on fire.</p>
+                            <div class="project-stats">
                                 <span>👥 OOP Demo</span>
                                 <span>⭐ Module Scripts</span>
                             </div>
-                            <a href="https://www.roblox.com/games/109296821545756/Partical-Showcase" target="_blank" class="play-button">Play on Roblox</a>
+                            <a href="https://www.roblox.com/games/109296821545756/Partical-Showcase" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
 
-                    <div class="game-card" data-category="featured showcase">
-                        <div class="game-image">🏗️ Plot Builder</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Plot Builder</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>Placement System, Money system, Theme mechanic, Reset Plot mechanics, and Delete Mode Mechanic.</p>
-                            </div>
-                            <div class="game-stats">
+                    <div class="project-card" data-category="featured showcase">
+                        <div class="project-image">🏗️ Plot Builder</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Plot Builder</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">Placement System, Money system, Theme mechanic, Reset Plot mechanics, and Delete Mode Mechanic.</p>
+                            <div class="project-stats">
                                 <span>👥 Demo Game</span>
                                 <span>⭐ Building System</span>
                             </div>
-                            <a href="https://www.roblox.com/games/96934881237791/Plot-Builder" target="_blank" class="play-button">Play on Roblox</a>
+                            <a href="https://www.roblox.com/games/96934881237791/Plot-Builder" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
 
-                    <div class="game-card" data-category="featured showcase">
-                        <div class="game-image">⚡ VFX Combat Showcase</div>
-                        <div class="game-info">
-                            <h3 class="game-title">VFX Combat Power Showcase</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>VFX, System that creates both UI and VFX and power abilities.</p>
-                            </div>
-                            <div class="game-stats">
+                    <div class="project-card" data-category="featured showcase">
+                        <div class="project-image">⚡ VFX Combat Showcase</div>
+                        <div class="project-content">
+                            <h3 class="project-title">VFX Combat Power Showcase</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">VFX, System that creates both UI and VFX and power abilities.</p>
+                            <div class="project-stats">
                                 <span>👥 Tech Demo</span>
                                 <span>⭐ VFX Skills</span>
                             </div>
-                            <a href="https://www.roblox.com/games/72449025908917/VFX-Combat-Power-Showcase" target="_blank" class="play-button">Play on Roblox</a>
+                            <a href="https://www.roblox.com/games/72449025908917/VFX-Combat-Power-Showcase" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
 
-                    <div class="game-card" data-category="featured strategy roleplay">
-                        <div class="game-image">🌍 World War 2 Roleplay</div>
-                        <div class="game-info">
-                            <h3 class="game-title">World War 2 Roleplay</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>Head Developer at Josa's Studios. Declare War mechanics, Gamepasses, DevProducts, Alliance Systems, and Spawning factories and other building to gain more GDP system.</p>
-                            </div>
-                            <div class="game-stats">
+                    <div class="project-card" data-category="featured strategy roleplay">
+                        <div class="project-image">🌍 World War 2 Roleplay</div>
+                        <div class="project-content">
+                            <h3 class="project-title">World War 2 Roleplay</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">Head Developer at Josa's Studios. Declare War mechanics, Gamepasses, DevProducts, Alliance Systems, and Spawning factories and other building to gain more GDP system.</p>
+                            <div class="project-stats">
                                 <span>👥 21.1M+ Visits</span>
                                 <span>⭐ Active Development</span>
                             </div>
-                            <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
+                            <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
 
-                    <div class="game-card" data-category="featured strategy roleplay">
-                        <div class="game-image">⚔️ NEW ERA Roleplay</div>
-                        <div class="game-info">
-                            <h3 class="game-title">NEW ERA World War Roleplay</h3>
-                            <span class="game-genre">Featured Games</span>
-                            <div class="game-description">
-                                <p>Owner & Scripter. Alliance system, declare war mechanics, GDP leaderstats, Gamepasses, Devproducts, Nukes, and a building troop system.</p>
-                            </div>
-                            <div class="game-stats">
+                    <div class="project-card" data-category="featured strategy roleplay">
+                        <div class="project-image">⚔️ NEW ERA Roleplay</div>
+                        <div class="project-content">
+                            <h3 class="project-title">NEW ERA World War Roleplay</h3>
+                            <div class="project-badge">Featured</div>
+                            <p class="project-description">Owner & Scripter. Alliance system, declare war mechanics, GDP leaderstats, Gamepasses, Devproducts, Nukes, and a building troop system.</p>
+                            <div class="project-stats">
                                 <span>👥 325K+ Visits</span>
                                 <span>⭐ Owner & Scripter</span>
                             </div>
-                            <a href="https://www.roblox.com/games/18215756523/NEW-ERA-World-War-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="showcase strategy">
-                        <div class="game-image">♟️ Royal Chess</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Royal Chess</h3>
-                            <span class="game-genre">Showcase/Strategy</span>
-                            <div class="game-description">
-                                <p>Placement System, Winning/Losing system, Bot System, Theme System, Captured Pieces Mechanics.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 Custom Game</span>
-                                <span>⭐ Bot System</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/72979049812215/Royal-Chess" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="showcase">
-                        <div class="game-image">⚙️ Particle Showcase</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Particle Showcase</h3>
-                            <span class="game-genre">Showcase</span>
-                            <div class="game-description">
-                                <p>Module Scripts to create particales that freeze or turn you on fire.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 OOP Demo</span>
-                                <span>⭐ Module Scripts</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/109296821545756/Partical-Showcase" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="showcase">
-                        <div class="game-image">🏗️ Plot Builder</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Plot Builder</h3>
-                            <span class="game-genre">Showcase</span>
-                            <div class="game-description">
-                                <p>Placement System, Money system, Theme mechanic, Reset Plot mechanics, and Delete Mode Mechanic.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 Demo Game</span>
-                                <span>⭐ Building System</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/96934881237791/Plot-Builder" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="showcase">
-                        <div class="game-image">⚡ VFX Combat Showcase</div>
-                        <div class="game-info">
-                            <h3 class="game-title">VFX Combat Power Showcase</h3>
-                            <span class="game-genre">Showcase</span>
-                            <div class="game-description">
-                                <p>VFX, System that creates both UI and VFX and power abilities.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 Tech Demo</span>
-                                <span>⭐ VFX Skills</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/72449025908917/VFX-Combat-Power-Showcase" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="strategy roleplay">
-                        <div class="game-image">🌍 World War 2 Roleplay</div>
-                        <div class="game-info">
-                            <h3 class="game-title">World War 2 Roleplay</h3>
-                            <span class="game-genre">Strategy/Roleplay</span>
-                            <div class="game-description">
-                                <p>Head Developer at Josa's Studios. Declare War mechanics, Gamepasses, DevProducts, Alliance Systems, and Spawning factories and other building to gain more GDP system.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 21.1M+ Visits</span>
-                                <span>⭐ Active Development</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/9864759962/WW2-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="strategy roleplay">
-                        <div class="game-image">⚔️ NEW ERA Roleplay</div>
-                        <div class="game-info">
-                            <h3 class="game-title">NEW ERA World War Roleplay</h3>
-                            <span class="game-genre">Strategy/Roleplay</span>
-                            <div class="game-description">
-                                <p>Owner & Scripter. Alliance system, declare war mechanics, GDP leaderstats, Gamepasses, Devproducts, Nukes, and a building troop system.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 325K+ Visits</span>
-                                <span>⭐ Owner & Scripter</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/18215756523/NEW-ERA-World-War-Roleplay" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="other">
-                        <div class="game-image">🌙 Whispers in the Dark</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Whispers in the Dark</h3>
-                            <span class="game-genre">Other</span>
-                            <div class="game-description">
-                                <p>Time system, Wood/Collect system, and NPC System.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 122+ Visits</span>
-                                <span>⭐ Work in Progress</span>
-                            </div>
-                            <a href="https://www.roblox.com/games/16292439198/Whispers-in-the-Dark-Pre-Alpha" target="_blank" class="play-button">Play on Roblox</a>
-                        </div>
-                    </div>
-
-                    <div class="game-card" data-category="other">
-                        <div class="game-image">🏃 Obby Survive</div>
-                        <div class="game-info">
-                            <h3 class="game-title">Obby Survive</h3>
-                            <span class="game-genre">Other</span>
-                            <div class="game-description">
-                                <p>One of my very earliest projects back in 2021 when I was still learning how to code.</p>
-                            </div>
-                            <div class="game-stats">
-                                <span>👥 2K+ Visits</span>
-                                <span>⭐ Abandoned</span>
-                            </div>
-                            <a href="#" class="play-button">Abandoned</a>
+                            <a href="https://www.roblox.com/games/18215756523/NEW-ERA-World-War-Roleplay" target="_blank" class="project-link">Play on Roblox</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="skills-section">
+        <section id="skills" class="section fade-in">
             <div class="container">
-                <h2 class="section-title">Skills & Expertise</h2>
+                <div class="section-header">
+                    <div class="section-badge">Expertise</div>
+                    <h2 class="section-title">Skills & Technologies</h2>
+                    <p class="section-description">My technical arsenal for creating exceptional Roblox experiences</p>
+                </div>
+
                 <div class="skills-grid">
                     <div class="skill-card">
                         <div class="skill-icon">⚡</div>
-                        <h3>Lua Scripting</h3>
-                        <p>Server & Client side development</p>
+                        <h3 class="skill-title">Lua Scripting</h3>
+                        <p class="skill-description">Server & Client side development</p>
                     </div>
                     <div class="skill-card">
                         <div class="skill-icon">🏗️</div>
-                        <h3>Roblox Studio</h3>
-                        <p>Building and scripting</p>
+                        <h3 class="skill-title">Roblox Studio</h3>
+                        <p class="skill-description">Building and scripting</p>
                     </div>
                     <div class="skill-card">
                         <div class="skill-icon">🎨</div>
-                        <h3>UI/UX Design</h3>
-                        <p>Creating user interfaces</p>
+                        <h3 class="skill-title">UI/UX Design</h3>
+                        <p class="skill-description">Creating user interfaces</p>
                     </div>
                     <div class="skill-card">
                         <div class="skill-icon">⚙️</div>
-                        <h3>Game Mechanics</h3>
-                        <p>Combat systems, inventory, etc.</p>
+                        <h3 class="skill-title">Game Mechanics</h3>
+                        <p class="skill-description">Combat systems, inventory, etc.</p>
                     </div>
                     <div class="skill-card">
                         <div class="skill-icon">📊</div>
-                        <h3>DataStore</h3>
-                        <p>Player data management</p>
+                        <h3 class="skill-title">DataStore</h3>
+                        <p class="skill-description">Player data management</p>
                     </div>
                     <div class="skill-card">
                         <div class="skill-icon">🌐</div>
-                        <h3>Remote Events/Functions</h3>
-                        <p>Client-server communication</p>
+                        <h3 class="skill-title">Remote Events/Functions</h3>
+                        <p class="skill-description">Client-server communication</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="videos-section">
+        <section id="videos" class="section fade-in">
             <div class="container">
-                <h2 class="section-title">Videos/Screenshots</h2>
+                <div class="section-header">
+                    <div class="section-badge">Showcase</div>
+                    <h2 class="section-title">Videos/Screenshots</h2>
+                    <p class="section-description">Watch my projects in action</p>
+                </div>
+
                 <div class="videos-grid">
                     <div class="video-card">
-                        <div class="video-thumbnail">📹 VFX/Combat Power Showcase</div>
+                        <div class="video-thumbnail">📹 VFX Combat</div>
                         <div class="video-info">
-                            <h3>VFX/Combat Power Showcase</h3>
-                            <p>Demonstration of my VFX and scripting skills with power abilities and visual effects.</p>
-                            <a href="https://www.youtube.com/watch?v=SCQ8X1zSslk" target="_blank" class="cta-button">Watch Video</a>
+                            <h3 class="video-title">VFX/Combat Power Showcase</h3>
+                            <p class="video-description">Demonstration of my VFX and scripting skills with power abilities and visual effects.</p>
+                            <a href="https://www.youtube.com/watch?v=SCQ8X1zSslk" target="_blank" class="btn btn-primary">Watch Video</a>
                         </div>
                     </div>
                     <div class="video-card">
                         <div class="video-thumbnail">📹 Inventory System</div>
                         <div class="video-info">
-                            <h3>Inventory System</h3>
-                            <p>Showcase of custom inventory system development and functionality.</p>
-                            <a href="https://www.youtube.com/watch?v=1TjaKGCWtDM" target="_blank" class="cta-button">Watch Video</a>
+                            <h3 class="video-title">Inventory System</h3>
+                            <p class="video-description">Showcase of custom inventory system development and functionality.</p>
+                            <a href="https://www.youtube.com/watch?v=1TjaKGCWtDM" target="_blank" class="btn btn-primary">Watch Video</a>
                         </div>
                     </div>
                     <div class="video-card">
                         <div class="video-thumbnail">📹 Plot Builder</div>
                         <div class="video-info">
-                            <h3>Plot Builder</h3>
-                            <p>Demonstration of placement system, money system, and building mechanics.</p>
-                            <a href="https://www.youtube.com/watch?v=z-TsPh5hbxQ" target="_blank" class="cta-button">Watch Video</a>
+                            <h3 class="video-title">Plot Builder</h3>
+                            <p class="video-description">Demonstration of placement system, money system, and building mechanics.</p>
+                            <a href="https://www.youtube.com/watch?v=z-TsPh5hbxQ" target="_blank" class="btn btn-primary">Watch Video</a>
                         </div>
                     </div>
                     <div class="video-card">
                         <div class="video-thumbnail">📹 Royal Chess</div>
                         <div class="video-info">
-                            <h3>Royal Chess Game Showcase</h3>
-                            <p>Complete chess game with bot system, theme mechanics, and captured pieces system.</p>
-                            <a href="https://www.youtube.com/watch?v=Gx1CBQ43gsw" target="_blank" class="cta-button">Watch Video</a>
+                            <h3 class="video-title">Royal Chess Game Showcase</h3>
+                            <p class="video-description">Complete chess game with bot system, theme mechanics, and captured pieces system.</p>
+                            <a href="https://www.youtube.com/watch?v=Gx1CBQ43gsw" target="_blank" class="btn btn-primary">Watch Video</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact-section">
+        <section id="contact" class="section fade-in">
             <div class="container">
-                <h2 class="section-title">Let's Work Together!</h2>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <span>🎮</span>
-                        <span><a href="https://www.roblox.com/users/1029215429/profile" target="_blank" style="color: #caf0f8; text-decoration: none;">@SkullNotS</a></span>
+                <div class="contact-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Let's Work Together!</h2>
                     </div>
-                    <div class="contact-item">
-                        <span>💬</span>
-                        <span>Discord: luminadev</span>
-                    </div>
-                    <div class="contact-item">
-                        <span>🛠️</span>
-                        <span><a href="https://devforum.roblox.com/u/skullnots/summary" target="_blank" style="color: #caf0f8; text-decoration: none;">DevForum</a></span>
+
+                    <div class="contact-links">
+                        <a href="https://www.roblox.com/users/1029215429/profile" target="_blank" class="contact-link">
+                            <span class="contact-icon">🎮</span>
+                            <span>@SkullNotS</span>
+                        </a>
+                        <a href="#" class="contact-link">
+                            <span class="contact-icon">💬</span>
+                            <span>Discord: luminadev</span>
+                        </a>
+                        <a href="https://devforum.roblox.com/u/skullnots/summary" target="_blank" class="contact-link">
+                            <span class="contact-icon">🛠️</span>
+                            <span>DevForum</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -894,7 +1234,7 @@
             });
         }
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
+        document.querySelectorAll('.nav-links a, .btn[href^="#"]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
@@ -902,8 +1242,17 @@
             });
         });
 
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
         const filterButtons = document.querySelectorAll('.filter-btn');
-        const gameCards = document.querySelectorAll('.game-card');
+        const projectCards = document.querySelectorAll('.project-card');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -912,7 +1261,7 @@
 
                 const filterValue = button.getAttribute('data-filter');
 
-                gameCards.forEach(card => {
+                projectCards.forEach(card => {
                     const categories = card.getAttribute('data-category').split(' ');
                     if (filterValue === 'all' || categories.includes(filterValue)) {
                         card.style.display = 'block';
@@ -931,19 +1280,6 @@
             });
         });
 
-        gameCards.forEach(card => {
-            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        });
-
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(0, 0, 0, 0.9)';
-            } else {
-                header.style.background = 'rgba(0, 0, 0, 0.3)';
-            }
-        });
-
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -952,17 +1288,17 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.game-card, .skill-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
+        });
+
+        projectCards.forEach(card => {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
         });
     </script>
 </body>
